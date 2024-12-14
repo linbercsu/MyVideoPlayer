@@ -1,6 +1,7 @@
 package com.mine.videoplayer
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -16,6 +17,11 @@ import com.mine.videoplayer.ui.theme.MyVideoPlayerTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val string = stringFromJNI()
+
+        Log.d("MainActivity", string)
+
         enableEdgeToEdge()
         setContent {
             MyVideoPlayerTheme {
@@ -27,6 +33,16 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+
+    companion object {
+        init {
+            System.loadLibrary("nativelib")
+        }
+
+        @JvmStatic
+        external fun stringFromJNI(): String
     }
 }
 
